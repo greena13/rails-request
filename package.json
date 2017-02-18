@@ -1,7 +1,7 @@
 {
   "name": "rails-request",
-  "version": "0.0.1",
-  "description": "Create a changes object for two other objects that is consistent with a Rails update request",
+  "version": "0.0.2",
+  "description": "Utility for producing a Rails-compatible object from a JavaScript or JSON one; perfect for create (POST) or update (PUT) endpoints",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel --presets=es2015,stage-0 src -d lib",
