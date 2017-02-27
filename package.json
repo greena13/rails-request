@@ -1,6 +1,6 @@
 {
   "name": "rails-request",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Utility for producing a Rails-compatible object from a JavaScript or JSON one; perfect for create (POST) or update (PUT) endpoints",
   "main": "lib/index.js",
   "scripts": {
