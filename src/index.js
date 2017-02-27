@@ -13,7 +13,7 @@ import size from 'lodash.size';
 
 import camelCase from 'lodash.camelcase';
 import snakeCase from 'lodash.snakecase';
-import endsWith from 'lodash.endsWith';
+import endsWith from 'lodash.endswith';
 
 import arrayFrom from './utils/arrayFrom';
 
