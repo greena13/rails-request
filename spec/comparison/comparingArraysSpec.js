@@ -76,6 +76,32 @@ describe('changes', function () {
         });
        });
 
+      describe('and a new object without an id is added to the front', function(){
+        const changed = [ { g: 'g' }, { i: 1, a: 'a', b: 'b' }, { i: 2, c: 'c', d: 'd' }, { i: 3, e: 'e', f: 'f' } ];
+        const differences = { 0: { g: 'g' } };
+
+        it('then returns a new array containing only the new objects', function(){
+
+          const changeObject = railsRequest(changed, { diff: original, identifiers: [ 'i' ] });
+
+          expect(changeObject).toEqual(differences);
+
+        });
+       });
+
+      describe('and a new object with an id is added to the front', function(){
+        const changed = [ { i: 4, g: 'g' }, { i: 1, a: 'a', b: 'b' }, { i: 2, c: 'c', d: 'd' }, { i: 3, e: 'e', f: 'f' } ];
+        const differences = { 0: { i: 4, g: 'g' } };
+
+        it('then returns a new array containing only the new objects', function(){
+
+          const changeObject = railsRequest(changed, { diff: original, identifiers: [ 'i' ] });
+
+          expect(changeObject).toEqual(differences);
+
+        });
+       });
+
       describe('and an object changes', function(){
         const changed =  [ { i: 1, a: 'a', b: 'b' }, { i: 2, c: 'x', d: 'd' }, { i: 3, e: 'e', f: 'f' }];
         const differences = { 0: { c: 'x' } };

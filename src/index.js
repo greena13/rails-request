@@ -375,16 +375,25 @@ function correspondingElementFrom(sourceArray, { correspondsTo, identifiers, fir
 
     if (hasDifferentIdentifierValues) {
 
-      return find(sourceArray, (sourceElement) => {
-        return !identifiersDoNotMatch(correspondsTo, sourceElement, identifiers)
-      }) || undefined;
+      return searchEntireArray(sourceArray, correspondsTo, identifiers);
 
     } else {
       return elementAtSameIndex;
     }
+  } else {
+
+    return searchEntireArray(sourceArray, correspondsTo, identifiers);
+
   }
 
 }
+
+function searchEntireArray(sourceArray, correspondsTo, identifiers) {
+  return find(sourceArray, (sourceElement) => {
+    return !identifiersDoNotMatch(correspondsTo, sourceElement, identifiers)
+  }) || undefined;
+}
+
 
 function identifiersDoNotMatch(source, target, identifiers) {
 
