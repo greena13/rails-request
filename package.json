@@ -24,7 +24,8 @@
   "files": [
     "lib",
     "package.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "devDependencies": {
     "babel-cli": "^6.0.0",
@@ -36,7 +37,7 @@
     "nodemon": "^1.11.0"
   },
   "author": "Aleck Greenham",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/greena13/rails-request/issues"
   },
