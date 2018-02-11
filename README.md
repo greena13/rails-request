@@ -1,5 +1,9 @@
 # rails-request
 
+[![npm](https://img.shields.io/npm/dm/rails-request.svg)]()
+[![Build Status](https://travis-ci.org/greena13/rails-request.svg)](https://travis-ci.org/greena13/rails-request)
+[![GitHub license](https://img.shields.io/github/license/greena13/rails-request.svg)](https://github.com/greena13/rails-request/blob/master/LICENSE)
+
 Utility for producing a Rails-compatible object from a JavaScript or JSON one; perfect for create (POST) or update (PUT) endpoints.
 
 ## Usage
