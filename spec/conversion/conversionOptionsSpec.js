@@ -1,6 +1,6 @@
 import each from 'lodash.foreach';
 
-import railsRequest from '../../index';
+import railsRequest from '../../rails-request.development';
 
 describe('converting', function () {
   describe('using the default options', function(){

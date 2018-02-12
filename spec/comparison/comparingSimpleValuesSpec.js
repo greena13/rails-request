@@ -1,4 +1,4 @@
-import railsRequest from '../../index';
+import railsRequest from '../../rails-request.development';
 
 describe('changes', function () {
   describe('when comparing a string value', function() {

@@ -1,4 +1,4 @@
-import railsRequest from '../../index';
+import railsRequest from '../../rails-request.development';
 import each from 'lodash.foreach';
 
 describe('changes', function () {
