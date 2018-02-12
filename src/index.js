@@ -17,6 +17,110 @@ import endsWith from 'lodash.endswith';
 
 import arrayFrom from './utils/arrayFrom';
 
+/**
+ * Returns a new JavaScript object that represents the information stored in another,
+ * but with the format and naming conventions consistent with a request to a Ruby on
+ * Rails server
+ *
+ * The default behaviour will:
+ * - Snake case attribute names
+ * - Keys that contain nested object will have the '_attributes' suffix added
+ * - Arrays of nested objects will be converted to hashes with index keys
+ *
+ * @param {object} target The object to convert to a Rails-friendly format
+ * @param {object} options Configuration object to customise the returned object
+ * @param {Array.<String>} [options.identifiers=['id']] A list of names of attributes
+ *        that should be treated as identifiers. These values are present in the
+ *        final object to allow Rails to locate the accompanying resources to be
+ *        created, updated or associated. If unspecified, 'id' attributes will be
+ *        treated as the only identifiers.
+ * @param {String} [options.nestedAttributesSuffix='_attributes'] The suffix that
+ *        should be added to nested objects. If unspecified, the Rails-friendly
+ *        suffix '_attributes' is appended to the keys that store all nested objects.
+ * @param {String} [options.attributeFormat='snakeCase'] The name of the string
+ *        conversion algorithm that should be applied to attribute names. By default
+ *        all attribute names are snake cased to be consistent with Rails' conventions.
+ *        When 'camelCase', attribute names are camel cased.
+ * @param {object} [options.diff] Another object the target object should be
+ *        recursively compared to in order to generate a third object that describes
+ *        the changes that need to be applied to that object to get the target one.
+ * @param {String} [options.destroyAttributeName='_destroy'] The attribute name that
+ *        should be used in destroy objects (resultant from an associated object being
+ *        destroyed).
+ * @param {*} [options.destroyAttributeValue=1] The value that should be used in
+ *        destroy objects (resultant from an associated object being destroyed).
+ * @param {boolean} [options.convertObjectArrays=true] Whether to convert nested
+ *        arrays of objects to maps with index keys. If false, the arrays are not
+ *        converted.
+ * @returns {object} The object consistent with the format and naming conventions of
+ *        a Rails request
+ *
+ * @example Generating a creation object for a new object using the default Rails
+ *          conventions
+ *
+ * const jsObject = {
+ *  userName: 'user123',
+ *  address: {
+ *    line1: '1 Street',
+ *    line2: 'City, Country'
+ *  },
+ *  achievementIds: [3,5],
+ *  photos: [
+ *    { id: 23, url: 'http://url.com/123' },
+ *    { id: 25, url: 'http://url.com/123' }
+ *  ]
+ *};
+ *
+ * const railsObject = railsRequest(jsObject);
+ *
+ * railsObject === {
+ *   user_name: 'user123',
+ *   address_attributes: {
+ *     line1: '1 Street',
+ *     line2: 'City, Country'
+ *   },
+ *   achievement_ids: [3,5],
+ *   photos_attributes: {
+ *     0: { id: 23, url: 'http://url.com/123' },
+ *     1: { id: 25, url: 'http://url.com/123' }
+ *   }
+ * }
+ *
+ * @example Generating a creation object without the _attributes suffix for nested
+ *          objects
+ *
+ * const railsObject = railsRequest(jsObject, { nestedAttributesSuffix: false });
+ *
+ * railsObject === {
+ *   user_name: 'user123',
+ *   address: {
+ *     line1: '1 Street',
+ *     line2: 'City, Country'
+ *   },
+ *   achievement_ids: [3,5],
+ *   photos: {
+ *     0: { id: 23, url: 'http://url.com/123' },
+ *     1: { id: 25, url: 'http://url.com/123' }
+ *   }
+ * }
+ *
+ * @example Generating a creation object without snake casing attribute names
+ *
+ * const railsObject = railsRequest(jsObject, { attributeFormat: 'camelCase' });
+ *
+ *  railsObject === {
+ *   userName: 'user123',
+ *   addressAttributes: {
+ *     line1: '1 Street',
+ *     line2: 'City, Country'
+ *   },
+ *   achievementIds: [3,5],
+ *   photosAttributes: {
+ *     0: { id: 23, url: 'http://url.com/123' },
+ *     1: { id: 25, url: 'http://url.com/123' }
+ *   }
+ * }
+ */
 function changes(target, options = {}) {
 
   const sanitizedOptions = sanitizeOptions(options);
